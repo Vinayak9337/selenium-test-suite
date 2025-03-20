@@ -1,11 +1,104 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<projectDescription>
-	<name>WindowsPowerShell</name>
-	<comment></comment>
-	<projects>
-	</projects>
-	<buildSpec>
-	</buildSpec>
-	<natures>
-	</natures>
-</projectDescription>
+package seleniumfirst.seleniumdot;
+
+import java.time.Duration;
+
+import java.util.Set;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebDriver;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import org.testng.annotations.Test;
+
+
+
+public class vinayak {
+
+
+
+    public static void main(String[] args) {
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.get("https://www.intervue.io/");
+
+        driver.manage().window().maximize();
+
+
+
+        // Click Login button
+
+        driver.findElement(By.xpath("//a[@class ='ivhn-contact-link loginBtn']")).click();
+
+
+
+        // Handle new window
+
+        String mainWindowHandle = driver.getWindowHandle();
+
+        Set<String> allWindowHandles = driver.getWindowHandles();
+
+
+
+        for (String windowHandle : allWindowHandles) {
+
+            if (!windowHandle.equals(mainWindowHandle)) {
+
+                driver.switchTo().window(windowHandle);
+
+                break;
+
+            }
+
+        }
+
+
+
+        // Click Login
+
+        driver.findElement(By.xpath("//a[@href='/login']//div[contains(@class, 'AccessAccount-ColoredButton-Text')][normalize-space()='Login']")).click();
+
+
+
+        // Enter credentials
+
+        driver.findElement(By.id("login_email")).sendKeys("vinayakrao1821@gmail.com");
+
+        driver.findElement(By.id("login_password")).sendKeys("Vinayak933@");
+
+
+
+        // Click login button
+
+        driver.findElement(By.xpath("//button[contains(@class, 'LoginDarkButton-sc-1ertvag-0')]")).click();
+
+
+
+        // Click on profile to log out
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'MockProfileHeader__UsernameWrap')]"))).click();
+
+
+
+        // Click Logout
+
+        driver.findElement(By.xpath("//a[text()='Logout']")).click();
+
+
+
+        // Close browser
+
+        driver.quit();
+
+    }
+
+}
+
